@@ -92,5 +92,3 @@ class Payment(models.Model):
     
     def __str__(self):
         return f'{self.booking.user.name} - {self.amount} ({self.status})'
-
-# Create your models here.

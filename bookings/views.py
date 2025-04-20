@@ -1,3 +1,38 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from .forms import BookingForm
+from .models import Hall, Booking
+from django.contrib.auth.decorators import login_required  # If you want to require login
+from django.contrib import messages  # For displaying messages to the user
 
-# Create your views here.
+
+# @login_required  # Uncomment if you want to require login to book
+def booking_view(request):
+    halls = Hall.objects.all()  # Get all halls from the database
+    #  user = request.user  # Get the logged-in user (if using authentication)
+
+    if request.method == 'POST':
+        form = BookingForm(request.POST)  # Create a form instance with the submitted data
+        if form.is_valid():
+            booking = form.save(commit=False)  # Create a Booking object but don't save it yet
+            # booking.user = user  # Assign the logged-in user (if using authentication)
+            booking.save()  # Save the Booking object to the database
+            messages.success(request, "Бронирование успешно создано!")  # Display a success message
+            return redirect('bookings:booking_confirmation', booking_id=booking.id)  # Redirect to confirmation page
+        else:
+            messages.error(request, "Пожалуйста, исправьте ошибки в форме.")  # Display an error message
+    else:
+        form = BookingForm()  # Create an empty form instance
+
+    context = {
+        'halls': halls,
+        'form': form,
+    }
+    return render(request, 'bookings/booking.html', context)  # Render the booking form
+
+
+def booking_confirmation_view(request, booking_id):
+    booking = get_object_or_404(Booking, id=booking_id)  # Get the Booking object by ID or return a 404 error
+    context = {
+        'booking': booking,
+    }
+    return render(request, 'bookings/booking_confirmation.html', context)  # Render the confirmation page
