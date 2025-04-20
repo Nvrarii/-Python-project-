@@ -1,7 +1,7 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
-{% block title %}Главная - Gym Booking{% endblock %}
+{% block title %}Главная - DAIYNDAL!{% endblock %}
 
 {% block content %}
 <header class="hero-section">
@@ -11,30 +11,129 @@
     </video>
     <div class="overlay"></div>
     <div class="content text-white text-center">
-        <h1 class="display-4">Добро пожаловать в Gym Booking!</h1>
-        <p class="lead">Бронируйте тренировки и спортзалы в два клика.</p>
+        <h1 class="display-4">Добро пожаловать в DAIYNDAL!</h1>
+        <p class="lead">Найдите и забронируйте идеальную тренировку в два клика.</p>
         <a href="{% url 'register' %}" class="btn btn-primary btn-lg mt-3">Начать</a>
     </div>
 </header>
 
-<div class="container mt-4">
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h2 class="text-center mb-4">Почему именно мы?</h2>
-            <div class="row">
-                <div class="col-md-4 text-center">
-                    <h5>Удобное бронирование</h5>
-                    <p>Простой интерфейс для выбора времени, зала и тренера.</p>
-                </div>
-                <div class="col-md-4 text-center">
-                    <h5>Современные залы</h5>
-                    <p>Только лучшие залы города — с отличным оборудованием и атмосферой.</p>
-                </div>
-                <div class="col-md-4 text-center">
-                    <h5>Проверенные тренеры</h5>
-                    <p>Профессионалы своего дела, с отзывами и рейтингами.</p>
+<div class="container mt-5">
+    <section class="py-5">
+        <h2 class="text-center mb-4">Почему DAIYNDAL — ваш лучший выбор?</h2>
+        <div class="row">
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-calendar-check display-4 text-primary mb-3"></i>
+                        <h5 class="card-title">Гибкое расписание</h5>
+                        <p class="card-text">Выбирайте удобное время для тренировок, которое идеально впишется в ваш график.</p>
+                    </div>
                 </div>
             </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-pin-map display-4 text-success mb-3"></i>
+                        <h5 class="card-title">Широкий выбор залов</h5>
+                        <p class="card-text">Получите доступ к лучшим спортивным залам города, расположенным в удобных для вас районах.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-person-hearts display-4 text-warning mb-3"></i>
+                        <h5 class="card-title">Квалифицированные тренеры</h5>
+                        <p class="card-text">Тренируйтесь под руководством опытных и сертифицированных специалистов.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-4">Познакомьтесь с нашими тренерами</h2>
+            <div class="row">
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card text-center">
+                        <img src="{% static 'images/trainer1.jpg' %}" alt="Тренер 1" class="card-img-top rounded-circle" style="height: 150px; object-fit: cover; width: 150px; margin: 0 auto;">
+                        <div class="card-body">
+                            <h5 class="card-title">Айжан</h5>
+                            <p class="card-text"><small class="text-muted">Фитнес-тренер</small></p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card text-center">
+                        <img src="{% static 'images/trainer2.jpg' %}" alt="Тренер 2" class="card-img-top rounded-circle" style="height: 150px; object-fit: cover; width: 150px; margin: 0 auto;">
+                        <div class="card-body">
+                            <h5 class="card-title">Марат</h5>
+                            <p class="card-text"><small class="text-muted">Персональный тренер</small></p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card text-center">
+                        <img src="{% static 'images/trainer3.jpg' %}" alt="Тренер 3" class="card-img-top rounded-circle" style="height: 150px; object-fit: cover; width: 150px; margin: 0 auto;">
+                        <div class="card-body">
+                            <h5 class="card-title">Сауле</h5>
+                            <p class="card-text"><small class="text-muted">Йога-инструктор</small></p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 mb-4">
+                    <div class="card text-center">
+                        <img src="{% static 'images/trainer4.jpg' %}" alt="Тренер 4" class="card-img-top rounded-circle" style="height: 150px; object-fit: cover; width: 150px; margin: 0 auto;">
+                        <div class="card-body">
+                            <h5 class="card-title">Дмитрий</h5>
+                            <p class="card-text"><small class="text-muted">Кроссфит-тренер</small></p>
+                            <a href="#" class="btn btn-sm btn-outline-primary">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <a href="#" class="btn btn-outline-secondary btn-lg">Все тренеры</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Отзывы наших клиентов</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">"DAIYNDAL помог мне найти отличный зал рядом с домом. Бронирование прошло очень быстро и удобно!"</p>
+                            <footer class="blockquote-footer">Айгерим, <cite title="Источник отзыва">Алматы</cite></footer>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <p class="card-text">"Очень рад, что воспользовался DAIYNDAL. Нашел персонального тренера, который помог мне достичь моих целей!"</p>
+                            <footer class="blockquote-footer">Руслан, <cite title="Источник отзыва">Нур-Султан</cite></footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <a href="#" class="btn btn-outline-info btn-sm">Больше отзывов</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="mb-4">Готовы начать свой путь к здоровью?</h2>
+            <p class="lead mb-3">Присоединяйтесь к DAIYNDAL сегодня и откройте для себя мир фитнеса!</p>
+            <a href="{% url 'register' %}" class="btn btn-success btn-lg">Зарегистрироваться сейчас</a>
         </div>
     </section>
 </div>
