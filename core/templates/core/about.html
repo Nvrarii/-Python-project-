@@ -1,16 +1,328 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Gym Booking - [Название страницы]</title>
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="{% url 'core:about' %}">О нас</a></li>
-        </ul>
-    </nav>
-    <h1>[Заголовок страницы]</h1>
-    <p>[Содержимое страницы]</p>
-</body>
-</html>
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}About Us - Gym Booking{% endblock %}
+
+{% block content %}
+<div class="about-us-container bmw-style">
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Your Path to the Perfect Workout Starts Here</h1>
+            <p class="hero-subtitle">Gym Booking is a convenient platform for finding and booking gyms and classes.</p>
+            <a href="{% url 'register' %}" class="hero-button">Join for Free</a>
+        </div>
+        <div class="hero-image">
+            <img src="{% static 'images/logo_daiyndal.png' %}" alt="DAIYNDAL Logo">
+        </div>
+    </header>
+
+    <section class="benefits-section section-with-border">
+        <h2 class="section-title">Why Choose Gym Booking?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <img src="{% static 'icons/Gemini_Generated_Image_c77j77c77j77c77j.jfif' %}" alt="Flexible Schedules">
+                <h3>Flexible Schedules</h3>
+                <p>Book your workouts at a time that suits you, 24/7.</p>
+            </div>
+            <div class="benefit-item">
+                <img src="{% static 'icons/Gemini_Generated_Image_mn7az2mn7az2mn7a.jfif' %}" alt="Wide Selection of Gyms">
+                <h3>Wide Selection of Gyms</h3>
+                <p>Thousands of gyms and studios across the city.</p>
+            </div>
+            <div class="benefit-item">
+                <img src="{% static 'icons/Gemini_Generated_Image_c77j77c77j77c77j.jfif' %}" alt="Easy Booking">
+                <h3>Easy Booking</h3>
+                <p>A simple and intuitive process in just a few clicks.</p>
+            </div>
+            <div class="benefit-item">
+                <img src="{% static 'icons/Gemini_Generated_Image_c77j77c77j77c77j.jfif' %}" alt="Qualified Trainers">
+                <h3>Qualified Trainers</h3>
+                <p>Train with the best professionals.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="our-story-detailed section-with-border">
+        <div class="story-image">
+            <img src="{% static 'images/our-story.jpg' %}" alt="Our Story">
+        </div>
+        <div class="story-content">
+            <h2 class="section-title">Our Story</h2>
+            <p>We are a team of fitness enthusiasts who once faced the problem of finding and booking a suitable gym. Spending time calling around and figuring out schedules seemed inefficient. That's how the idea for Gym Booking was born - a platform that brings together all the sports opportunities in the city in one convenient place.</p>
+            <p>Our goal is to make fitness accessible to everyone, regardless of location and preferences. We believe that taking care of your body and health should be simple and enjoyable.</p>
+        </div>
+    </section>
+
+    <section class="our-mission-detailed section-with-border">
+        <div class="mission-content">
+            <h2 class="section-title">Our Mission</h2>
+            <p>Gym Booking's mission is to inspire people to lead an active lifestyle by providing easy access to the best sports resources. We strive to create a community where everyone can find the ideal place and time for their workouts, achieve their fitness goals, and feel better.</p>
+            <p>We are constantly developing our platform, adding new features and improving the user experience to make your journey to health as comfortable and effective as possible.</p>
+        </div>
+        <div class="mission-image">
+            <img src="{% static 'images/our-mission.jpg' %}" alt="Our Mission">
+        </div>
+    </section>
+
+    <section class="call-to-action section-with-border">
+        <h2>Ready to Start?</h2>
+        <p>Find your ideal gym and book a workout today!</p>
+        <a href="{% url 'register' %}" class="cta-button">Register</a>
+        <a href="{% url 'bookings:booking' %}" class="cta-button secondary">Find a Gym</a>
+    </section>
+</div>
+{% endblock %}
+
+{% block styles %}
+<style>
+    /* General Styles */
+    .bmw-style {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .section-title {
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #007bff;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .section-with-border {
+        border-bottom: 1px solid #eee; /* Add a border at the bottom of each section */
+        padding-bottom: 80px; /* Increase bottom padding so the border doesn't blend with the content */
+        margin-bottom: 60px; /* Add margin between sections */
+    }
+
+    /* Remove border from the last section */
+    .call-to-action.section-with-border {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 80px; /* Keep the inner padding */
+    }
+
+    /* Hero Section */
+    .hero-section {
+        background-color: #f8f9fa;
+        padding: 100px 40px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-image: url("{% static 'images/aboutusfon3.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .hero-image {
+        max-width: 400px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        background-color: transparent;
+    }
+
+    .hero-image img { /* Style for displaying the logo */
+        width: 100%;
+        height: auto;
+        display: block; /* Removes extra space below the image */
+    }
+
+    .hero-image::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        z-index: -1; /* Place below the hero-image content */
+    }
+
+    .hero-content {
+        max-width: 500px;
+        text-align: center; /* Added text alignment for better look */
+    }
+
+    .hero-title {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #222;
+        margin-bottom: 20px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    .hero-button {
+        display: inline-block;
+        padding: 15px 30px;
+        background-color: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .hero-button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Benefits Section */
+    .benefits-section {
+        padding: 80px 40px;
+        background-color: #fff;
+    }
+
+    .benefits-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly increase minmax */
+        gap: 40px;
+        margin-top: 30px;
+    }
+
+    .benefit-item {
+        text-align: center;
+    }
+
+    .benefit-item img {
+        width: 100px; /* Increase icon size */
+        height: 100px;
+        margin-bottom: 20px;
+        color: #007bff;
+        border-radius: 15px; /* Add rounded corners */
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05); /* Slight shadow for emphasis */
+    }
+
+    .benefit-item h3 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #222;
+        margin-bottom: 10px;
+    }
+
+    .benefit-item p {
+        color: #555;
+    }
+
+    /* Detailed Sections */
+    .our-story-detailed, .our-mission-detailed {
+        padding: 80px 40px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: #f8f9fa;
+    }
+
+    .our-mission-detailed {
+        background-color: #fff;
+        flex-direction: row-reverse;
+    }
+
+    .story-image, .mission-image {
+        max-width: 450px;
+    }
+
+    .story-image img, .mission-image img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .story-content, .mission-content {
+        max-width: 500px;
+    }
+
+    .story-content h2, .mission-content h2 {
+        font-size: 2rem;
+        font-weight: bold;
+        color: #222;
+        margin-bottom: 20px;
+    }
+
+    .story-content p, .mission-content p {
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    /* Call to Action */
+    .call-to-action {
+        padding: 80px 40px;
+        background-color: #007bff;
+        color: white;
+        text-align: center;
+    }
+
+    .call-to-action h2 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .call-to-action p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+
+    .cta-button {
+        display: inline-block;
+        padding: 15px 30px;
+        background-color: white;
+        color: #007bff;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1rem;
+        font-weight: bold;
+        margin: 0 10px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .cta-button.secondary {
+        background-color: transparent;
+        border: 2px solid white;
+        color: white;
+    }
+
+    .cta-button:hover {
+        background-color: #0056b3;
+        color: white;
+    }
+
+    .cta-button.secondary:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+        .hero-section, .our-story-detailed, .our-mission-detailed {
+            flex-direction: column;
+            text-align: center;
+        }
+        .hero-image, .story-image, .mission-image {
+            max-width: 100%;
+            margin-top: 30px;
+        }
+        .hero-content, .story-content, .mission-content {
+            max-width: 100%;
+        }
+        .benefits-grid {
+            grid-template-columns: 1fr;
+        }
+        .cta-button {
+            margin: 10px 0;
+            width: 80%;
+        }
+        .section-with-border {
+            padding-bottom: 60px; /* Reduce padding for mobile devices */
+            margin-bottom: 40px; /* Reduce margin between sections for mobile devices */
+        }
+    }
+</style>
+{% endblock %}

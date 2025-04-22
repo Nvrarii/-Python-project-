@@ -3,7 +3,8 @@ from .forms import BookingForm
 from .models import Hall, Booking
 from django.contrib.auth.decorators import login_required  # If you want to require login
 from django.contrib import messages  # For displaying messages to the user
-
+from django.http import JsonResponse
+from datetime import datetime
 
 # @login_required  # Uncomment if you want to require login to book
 def booking_view(request):
@@ -36,3 +37,19 @@ def booking_confirmation_view(request, booking_id):
         'booking': booking,
     }
     return render(request, 'bookings/booking_confirmation.html', context)  # Render the confirmation page
+
+def api_booked_slots(request):
+    start = request.GET.get('start')
+    end = request.GET.get('end')
+    bookings = Booking.objects.filter(
+        booking_date__range=(start, end),
+        status='active'
+    )
+
+    events = []
+    for b in bookings:
+        events.append({
+            "start": f"{b.booking_date}T{b.start_time}",
+            "end": f"{b.booking_date}T{b.end_time}"
+        })
+    return JsonResponse(events, safe=False)
