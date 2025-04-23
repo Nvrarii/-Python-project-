@@ -84,7 +84,6 @@
         color: #333;
     }
 
-    /* Add smooth animations for all buttons */
     .btn {
         transition: transform 0.3s ease, background-color 0.3s ease;
     }
@@ -147,13 +146,11 @@
     </div>
 </div>
 
+<!-- Подключение стилей и скриптов -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
-
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ru.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
 
 <script>
@@ -165,39 +162,40 @@ document.addEventListener('DOMContentLoaded', function () {
     const startTimeInput = document.getElementById("id_start_time");
     const endTimeInput = document.getElementById("id_end_time");
 
-    // Hide calendar until a hall is selected
+    // Скрыть календарь до выбора зала
     calendarEl.style.display = "none";
 
-    hallSelect.addEventListener("change", function () {
-        if (hallSelect.value) {
-            // Show calendar after selecting a hall
-            calendarEl.style.display = "block";
-            initializeCalendar();
+    // Проверка, нужно ли активировать кнопку "Book Now"
+    function checkForm() {
+        if (hallSelect.value && bookingDateInput.value && startTimeInput.value && endTimeInput.value) {
+            submitBtn.disabled = false;  // Разблокировать кнопку
         } else {
-            // If no hall is selected, hide the calendar
-            calendarEl.style.display = "none";
+            submitBtn.disabled = true;  // Оставить кнопку заблокированной
         }
+    }
+
+    // Обработчик изменений в полях
+    hallSelect.addEventListener("change", function() {
+        checkForm();
+    });
+    bookingDateInput.addEventListener("change", function() {
+        checkForm();
+    });
+    startTimeInput.addEventListener("change", function() {
+        checkForm();
+    });
+    endTimeInput.addEventListener("change", function() {
+        checkForm();
     });
 
-    flatpickr(".flatpickr-date", {
-        dateFormat: "Y-m-d",
-        locale: "ru" // Keep Russian locale for datepicker
-    });
-
-    flatpickr(".flatpickr-time", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true
-    });
-
+    // Инициализация календаря
     function initializeCalendar() {
         const calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'timeGridWeek',
             slotDuration: '01:00:00',
             slotMinTime: "08:00:00",
             slotMaxTime: "22:00:00",
-            locale: 'en', // Set calendar locale to English
+            locale: 'en',
             selectable: true,
             height: 550,
             headerToolbar: {
@@ -213,7 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 bookingDateInput.value = startDate;
                 startTimeInput.value = startTime;
                 endTimeInput.value = endTime;
-                submitBtn.disabled = false;
+                checkForm();  // Проверяем форму после выбора времени
             },
             events: "{% url 'bookings:api_booked_slots' %}",
             eventColor: '#dc3545',
@@ -222,6 +220,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
         calendar.render();
     }
+
+    // Инициализация flatpickr для выбора даты и времени
+    flatpickr(".flatpickr-date", {
+        dateFormat: "Y-m-d",
+        locale: "ru"  // Russian locale for the date picker
+    });
+
+    flatpickr(".flatpickr-time", {
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    });
+
 });
 </script>
+
 {% endblock %}
