@@ -4,35 +4,25 @@ from .models import Hall, Booking
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse
+from django.utils.dateparse import parse_datetime
 from datetime import datetime
 
-
-# @login_required  # Uncomment if you want to require login to book
+# View to handle booking
+@login_required
 def booking_view(request):
-    halls = Hall.objects.all()  # Get all halls from the database
-
-    # If the user is sending the form data (POST request)
     if request.method == 'POST':
-        form = BookingForm(request.POST)  # Create a form instance with the submitted data
+        form = BookingForm(request.POST)
         if form.is_valid():
-            booking = form.save(commit=False)  # Create a Booking object but don't save it yet
-            # booking.user = request.user  # Assign the logged-in user (if using authentication)
-            booking.save()  # Save the Booking object to the database
-            messages.success(request, "Бронирование успешно создано!")  # Display a success message
-            return redirect('bookings:booking_confirmation', booking_id=booking.id)  # Redirect to confirmation page
-        else:
-            messages.error(request, "Пожалуйста, исправьте ошибки в форме.")  # Display an error message
+            form.save()  # Сохраняем бронирование
+            messages.success(request, "Your booking was successful!")
+            return redirect('bookings:booking_success')  # Переадресация на успешную страницу
     else:
-        form = BookingForm()  # Create an empty form instance
+        form = BookingForm()
 
-    # Pass the halls and form to the template
-    context = {
-        'halls': halls,
-        'form': form,
-    }
-    return render(request, 'bookings/booking.html', context)  # Render the booking form
+    return render(request, 'bookings/booking.html', {'form': form})
 
 
+# Confirmation view after a successful booking
 def booking_confirmation_view(request, booking_id):
     # Fetch the Booking object by ID or return a 404 error
     booking = get_object_or_404(Booking, id=booking_id)
@@ -45,17 +35,17 @@ def booking_confirmation_view(request, booking_id):
 
 # API to get booked slots between start and end times
 def api_booked_slots(request):
-    start = request.GET.get('start')  # Получаем начальную дату
-    end = request.GET.get('end')  # Получаем конечную дату
+    start = request.GET.get('start')  # Get the start date
+    end = request.GET.get('end')  # Get the end date
 
-    # Преобразуем строки в объекты datetime
+    # Convert strings to datetime objects
     start = parse_datetime(start)
     end = parse_datetime(end)
 
-    # Получаем все бронирования в заданном интервале времени
+    # Get all bookings within the specified time range
     bookings = Booking.objects.filter(
         booking_date__range=(start, end),
-        status='active'  # Здесь предполагается, что активные бронирования имеют статус 'active'
+        status='active'  # Assuming that active bookings have 'active' status
     )
 
     events = []

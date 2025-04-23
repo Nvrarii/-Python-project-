@@ -21,7 +21,7 @@ class BookingForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['hall'].queryset = Hall.objects.all()  # Limit halls to available ones (you might want to filter this further)
+        self.fields['hall'].queryset = Hall.objects.all()
 
     def clean(self):
         cleaned_data = super().clean()
