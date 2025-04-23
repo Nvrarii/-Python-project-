@@ -136,5 +136,76 @@
             <a href="{% url 'register' %}" class="btn btn-success btn-lg">Register Now</a>
         </div>
     </section>
+
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center mb-4">Explore Our Partner Gyms</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{% static 'images/gym1.jpg' %}" class="card-img-top" alt="Gym 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Fitness First</h5>
+                            <p class="card-text">Modern equipment and a wide range of group classes.</p>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{% static 'images/gym2.jpg' %}" class="card-img-top" alt="Gym 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Power House Gym</h5>
+                            <p class="card-text">Specialized in strength training and bodybuilding.</p>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{% static 'images/gym3.jpg' %}" class="card-img-top" alt="Gym 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Yoga Studio Zen</h5>
+                            <p class="card-text">A peaceful space for yoga and meditation practices.</p>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{% static 'images/gym4.jpg' %}" class="card-img-top" alt="Gym 4">
+                        <div class="card-body">
+                            <h5 class="card-title">CrossFit Almaty</h5>
+                            <p class="card-text">High-intensity functional fitness training.</p>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{% static 'images/gym5.jpg' %}" class="card-img-top" alt="Gym 5">
+                        <div class="card-body">
+                            <h5 class="card-title">Aqua Fitness Center</h5>
+                            <p class="card-text">Enjoy swimming pools and aquatic workout programs.</p>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100">
+                        <img src="{% static 'images/gym6.jpg' %}" class="card-img-top" alt="Gym 6">
+                        <div class="card-body">
+                            <h5 class="card-title">Boxing Club KO</h5>
+                            <p class="card-text">Professional boxing training for all levels.</p>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="{% url 'bookings:booking' %}" class="btn btn-primary btn-lg">Book Your Workout Now</a>
+            </div>
+        </div>
+    </section>
 </div>
 {% endblock %}

@@ -1,16 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Gym Booking - [Название страницы]</title>
-</head>
-<body>
-    <nav>
-        <ul>
-            <li><a href="{% url 'core:contact' %}">Контакты</a></li>
-        </ul>
-    </nav>
-    <h1>[Заголовок страницы]</h1>
-    <p>[Содержимое страницы]</p>
-</body>
-</html>
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - Gym Booking{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg p-4">
+                <h2 class="text-center mb-4">Contact Us</h2>
+                <p class="lead text-center mb-4">We'd love to hear from you! Please feel free to reach out with any questions, feedback, or inquiries.</p>
+                <hr class="my-4">
+                <div>
+                    <h3>Our Location:</h3>
+                    <p><i class="bi bi-geo-alt-fill text-primary me-2"></i> [Your Gym Address Here], Almaty, Kazakhstan</p>
+                </div>
+                <hr class="my-4">
+                <div>
+                    <h3>Contact Information:</h3>
+                    <p><i class="bi bi-envelope-fill text-info me-2"></i> Email: <a href="mailto:[Your Email Address Here]">[Your Email Address Here]</a></p>
+                    <p><i class="bi bi-phone-fill text-success me-2"></i> Phone: <a href="tel:[Your Phone Number Here]">[Your Phone Number Here]</a></p>
+                </div>
+                <hr class="my-4">
+                <div>
+                    <h3>Business Hours:</h3>
+                    <p><i class="bi bi-clock-fill text-warning me-2"></i> Monday - Friday: [Your Business Hours]</p>
+                    <p><i class="bi bi-clock-fill text-warning me-2"></i> Saturday - Sunday: [Your Weekend Hours]</p>
+                </div>
+                <hr class="my-4">
+                <div>
+                    <h3>Send us a Message:</h3>
+                    <form>
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Your Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea class="form-control" id="message" rows="5" placeholder="Enter your message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css">
+<style>
+    .card {
+        border-radius: 15px;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+</style>
+{% endblock %}
