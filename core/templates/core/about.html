@@ -9,7 +9,8 @@
         <div class="hero-content">
             <h1 class="hero-title">Your Path to the Perfect Workout Starts Here</h1>
             <p class="hero-subtitle">Gym Booking is a convenient platform for finding and booking gyms and classes.</p>
-            <a href="{% url 'register' %}" class="hero-button">Join for Free</a>
+            <a href="{% url 'users:register' %}" class="hero-button">Join for Free</a>
+            <a href="{% url 'users:register' %}" class="cta-button">Register</a>
         </div>
         <div class="hero-image">
             <!-- Путь к логотипу -->
@@ -70,7 +71,7 @@
     <section class="call-to-action section-with-border">
         <h2>Ready to Start?</h2>
         <p>Find your ideal gym and book a workout today!</p>
-        <a href="{% url 'register' %}" class="cta-button">Register</a>
+        <a href="{% url 'users:register' %}" class="cta-button">Register</a>
         <a href="{% url 'bookings:booking' %}" class="cta-button secondary">Find a Gym</a>
     </section>
 </div>
