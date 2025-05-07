@@ -1,3 +1,4 @@
+<!-- filepath: c:\Users\user\-Python-project-\users\templates\registration\register.html -->
 {% extends 'core/base.html' %}
 {% load static %}
 
@@ -12,25 +13,42 @@
                     <h4 class="mb-0">Create Your Account</h4>
                 </div>
                 <div class="card-body">
+                    <!-- Display server-side form errors -->
+                    {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for field, errors in form.errors.items %}
+                                    <li><strong>{{ field|capfirst }}:</strong>
+                                        <ul>
+                                            {% for error in errors %}
+                                                <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                    
                     <form action="{% url 'users:register_user' %}" method="post" id="registrationForm">
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control" id="username" name="username" required
-                                   placeholder="Enter your username">
+                                placeholder="Enter your username" value="{{ form.username.value|default:'' }}">
                             <div class="invalid-feedback" id="usernameError"></div>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email Address</label>
                             <input type="email" class="form-control" id="email" name="email" required
-                                   placeholder="Enter your email">
+                                placeholder="Enter your email" value="{{ form.email.value|default:'' }}">
                             <div class="invalid-feedback" id="emailError"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
+                            <label for="password1" class="form-label">Password</label>
                             <div class="input-group">
-                                <input type="password" class="form-control" id="password" name="password" required
-                                       placeholder="Enter your password">
+                                <input type="password" class="form-control" id="password" name="password1" required
+                                    placeholder="Enter your password">
                                 <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                                     <i class="bi bi-eye-slash"></i>
                                 </button>
@@ -39,10 +57,10 @@
                             <div class="invalid-feedback" id="passwordError"></div>
                         </div>
                         <div class="mb-3">
-                            <label for="confirm_password" class="form-label">Confirm Password</label>
+                            <label for="password2" class="form-label">Confirm Password</label>
                             <div class="input-group">
                                 <input type="password" class="form-control" id="confirm_password"
-                                       name="confirm_password" required placeholder="Confirm your password">
+                                    name="password2" required placeholder="Confirm your password">
                                 <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword">
                                     <i class="bi bi-eye-slash"></i>
                                 </button>

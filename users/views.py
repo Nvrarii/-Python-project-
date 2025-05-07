@@ -12,17 +12,19 @@ def register_view(request):
 # Обработка регистрации пользователя
 def register_user(request):
     if request.method == 'POST':
+        # Передаем данные формы напрямую
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()  # Сохраняем нового пользователя
-            messages.success(request, "Registration successful! You can now log in.")
+            user = form.save()  # Сохраняем нового пользователя
+            messages.success(request, "Регистрация прошла успешно! Теперь вы можете войти.")
             return redirect('users:login')  # Перенаправляем на страницу входа
         else:
-            messages.error(request, "There was an error with your registration.")
+            # Передаем ошибки в шаблон
+            messages.error(request, "Ошибка при регистрации. Проверьте введенные данные.")
     else:
         form = UserCreationForm()
 
-    return render(request, 'registration/register_user.html', {'form': form})
+    return render(request, 'registration/register.html', {'form': form})
 
 # Страница входа
 def login_view(request):
