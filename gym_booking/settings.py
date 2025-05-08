@@ -132,3 +132,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/users/login/'  # Укажите ваш маршрут для входа
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
