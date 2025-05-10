@@ -9,11 +9,12 @@
         <div class="hero-content">
             <h1 class="hero-title">Your Path to the Perfect Workout Starts Here</h1>
             <p class="hero-subtitle">Gym Booking is a convenient platform for finding and booking gyms and classes.</p>
-            <a href="{% url 'users:register' %}" class="hero-button">Join for Free</a>
-            <a href="{% url 'users:register' %}" class="cta-button">Register</a>
+            {% if not user.is_authenticated %}
+                <a href="{% url 'users:register' %}" class="hero-button">Join for Free</a>
+                <a href="{% url 'users:register' %}" class="cta-button">Register</a>
+            {% endif %}
         </div>
         <div class="hero-image">
-            <!-- Путь к логотипу -->
             <img src="{% static 'images/logo_daiyndal.png' %}" alt="DAIYNDAL Logo">
         </div>
     </header>

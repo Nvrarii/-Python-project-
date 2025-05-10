@@ -1,13 +1,66 @@
+<!-- filepath: c:\Users\user\-Python-project-\core\templates\bookings\booking.html -->
 {% extends 'core/base.html' %}
 {% load static %}
 
 {% block content %}
 <style>
+    /* Основной стиль для страницы */
     body {
         background-color: #f9f9fb;
         font-family: 'Segoe UI', sans-serif;
+        margin: 0;
+        padding: 0;
     }
 
+    /* Шапка */
+    .navbar {
+        background-color: rgba(0, 0, 0, 0.85);
+        padding: 10px 20px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    .navbar-brand {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    .navbar-nav .nav-link {
+        font-size: 1rem;
+        padding: 8px 15px;
+        color: #fff;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: #1cc88a;
+    }
+
+    /* Футер */
+    footer {
+        background-color: #222;
+        color: #fff;
+        padding: 20px 0;
+        font-size: 0.9rem;
+        text-align: center;
+        position: relative;
+        bottom: 0;
+        width: 100%;
+    }
+
+    footer p {
+        margin: 0;
+    }
+
+    /* Контентная область */
+    .content-wrapper {
+        padding-top: 80px; /* Отступ для шапки */
+        padding-bottom: 60px; /* Отступ для футера */
+    }
+
+    /* Карточки */
     .glass-card {
         background: rgba(255, 255, 255, 0.7);
         border-radius: 1.5rem;
@@ -25,6 +78,7 @@
         }
     }
 
+    /* Кнопка */
     .btn-notion {
         background: linear-gradient(135deg, #4e73df, #1cc88a);
         color: #fff;
@@ -43,16 +97,20 @@
         transform: scale(1.05);
     }
 
+    /* Календарь */
     #calendar {
         border-radius: 1rem;
         overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-        animation: fadeInUp 1.1s ease forwards;
-        transform: translateY(30px);
-        opacity: 0;
-        display: none;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
 
+    @media (max-width: 768px) {
+        #calendar {
+            font-size: 0.8rem;
+        }
+    }
+
+    /* Поля формы */
     .form-control, select {
         background-color: #fff;
         border-radius: 12px;
@@ -77,6 +135,7 @@
         margin-bottom: 20px;
     }
 
+    /* Заголовок календаря */
     .calendar-header {
         margin-bottom: 15px;
         font-weight: 600;
@@ -84,6 +143,7 @@
         color: #333;
     }
 
+    /* Кнопки */
     .btn {
         transition: transform 0.3s ease, background-color 0.3s ease;
     }
@@ -91,6 +151,20 @@
     .btn:hover {
         transform: scale(1.03);
         background-color: #007bff;
+    }
+
+    @media (max-width: 768px) {
+        .glass-card {
+            margin-bottom: 1.5rem;
+        }
+
+        .calendar-header {
+            text-align: center;
+        }
+
+        #calendar {
+            width: 100%;
+        }
     }
 </style>
 
@@ -176,50 +250,43 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Обработчик изменений в полях
     hallSelect.addEventListener("change", function() {
+        calendarEl.style.display = hallSelect.value ? "block" : "none";
         checkForm();
     });
-    bookingDateInput.addEventListener("change", function() {
-        checkForm();
-    });
-    startTimeInput.addEventListener("change", function() {
-        checkForm();
-    });
-    endTimeInput.addEventListener("change", function() {
-        checkForm();
-    });
+    bookingDateInput.addEventListener("change", checkForm);
+    startTimeInput.addEventListener("change", checkForm);
+    endTimeInput.addEventListener("change", checkForm);
 
     // Инициализация календаря
-    function initializeCalendar() {
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'timeGridWeek',
-            slotDuration: '01:00:00',
-            slotMinTime: "08:00:00",
-            slotMaxTime: "22:00:00",
-            locale: 'en',
-            selectable: true,
-            height: 550,
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'timeGridDay,timeGridWeek'
-            },
-            select: function (info) {
-                const startDate = info.startStr.split("T")[0];
-                const startTime = info.startStr.split("T")[1].slice(0, 5);
-                const endTime = info.endStr.split("T")[1].slice(0, 5);
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'timeGridWeek',
+        slotDuration: '01:00:00',
+        slotMinTime: "08:00:00",
+        slotMaxTime: "22:00:00",
+        locale: 'en',
+        selectable: true,
+        height: 550,
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'timeGridDay,timeGridWeek'
+        },
+        select: function (info) {
+            const startDate = info.startStr.split("T")[0];
+            const startTime = info.startStr.split("T")[1].slice(0, 5);
+            const endTime = info.endStr.split("T")[1].slice(0, 5);
 
-                bookingDateInput.value = startDate;
-                startTimeInput.value = startTime;
-                endTimeInput.value = endTime;
-                checkForm();  // Проверяем форму после выбора времени
-            },
-            events: "{% url 'bookings:api_booked_slots' %}",
-            eventColor: '#dc3545',
-            eventTextColor: '#fff'
-        });
+            bookingDateInput.value = startDate;
+            startTimeInput.value = startTime;
+            endTimeInput.value = endTime;
+            checkForm();  // Проверяем форму после выбора времени
+        },
+        events: "{% url 'bookings:api_booked_slots' %}",
+        eventColor: '#dc3545',
+        eventTextColor: '#fff'
+    });
 
-        calendar.render();
-    }
+    calendar.render();
 
     // Инициализация flatpickr для выбора даты и времени
     flatpickr(".flatpickr-date", {
@@ -233,7 +300,6 @@ document.addEventListener('DOMContentLoaded', function () {
         dateFormat: "H:i",
         time_24hr: true
     });
-
 });
 </script>
 

@@ -1,0 +1,11 @@
+<!-- filepath: c:\Users\user\-Python-project-\users\templates\registration\logged_out.html -->
+{% extends 'core/base.html' %}
+
+{% block title %}Logged Out{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1>You have been logged out</h1>
+    <p>Thank you for visiting. <a href="{% url 'core:home' %}">Return to Home</a></p>
+</div>
+{% endblock %}
