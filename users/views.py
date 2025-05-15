@@ -9,6 +9,12 @@ from bookings.models import Booking
 from .models import Profile
 from .forms import ProfileForm
 
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
+@login_required
+def profile_view(request):
+    return render(request, 'users/profile.html', {'user': request.user})
 
 # Страница регистрации
 def register_view(request):
@@ -47,12 +53,6 @@ def login_view(request):
     return render(request, 'registration/login.html', {'form': form})
 
 
-# Профиль пользователя
-@login_required
-def profile_view(request):
-    return render(request, 'registration/profile.html')
-
-
 # Редактирование профиля
 @login_required
 def edit_profile(request):
@@ -61,9 +61,9 @@ def edit_profile(request):
         form = ProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('users:profile')
+            return redirect('users:profile')  # Убедись, что такой url существует
     else:
         form = ProfileForm(instance=profile)
-    return render(request, 'registration/edit_profile.html', {'form': form})
 
+    return render(request, 'users/edit_profile.html', {'form': form})  # <-- путь исправлен
 
