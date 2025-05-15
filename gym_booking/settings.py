@@ -156,3 +156,4 @@ LOGGING = {
         },
     },
 }
+AUTH_USER_MODEL = 'bookings.User'

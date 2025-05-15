@@ -1,8 +1,10 @@
 <!-- filepath: c:\Users\user\-Python-project-\core\templates\bookings\booking.html -->
+
 {% extends 'core/base.html' %}
 {% load static %}
 
 {% block content %}
+
 <style>
     /* Основной стиль для страницы */
     body {
@@ -166,6 +168,39 @@
             width: 100%;
         }
     }
+
+/* Уточняем: стили внутри popup flatpickr */
+.flatpickr-calendar .numInput {
+    border: 2px solid #4e73df !important;
+    border-radius: 8px !important;
+    font-weight: bold;
+    color: #333;
+    background-color: #ffffffcc !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Стили стрелочек */
+.flatpickr-calendar .arrowUp,
+.flatpickr-calendar .arrowDown {
+    background: #4e73df !important;
+    color: white !important;
+    border-radius: 6px;
+    padding: 2px 5px;
+}
+
+/* Стили выбора чисел */
+.flatpickr-calendar .numInputWrapper {
+    box-shadow: 0 0 6px rgba(78, 115, 223, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 0 2px;
+}
+
+/* Стили списка значений при наведении */
+.flatpickr-calendar .flatpickr-time input:hover {
+    background-color: #e8f0fe !important;
+}
+
 </style>
 
 <div class="container my-5">
@@ -174,53 +209,66 @@
             <div class="p-4 glass-card">
                 <h2 class="mb-4 fw-semibold">Gym Booking 🏋️</h2>
 
-                {% if messages %}
-                    <div class="mb-3">
-                        {% for message in messages %}
-                            <div class="alert alert-{{ message.tags }}">{{ message }}</div>
-                        {% endfor %}
-                    </div>
-                {% endif %}
+```
+            {% if messages %}
+                <div class="mb-3">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
-                <form method="post" action="{% url 'bookings:booking' %}">
-                    {% csrf_token %}
-                    <div class="form-group">
-                        <label for="id_hall">Select Hall</label>
-                        {{ form.hall }}
-                    </div>
+            <form method="post" action="{% url 'bookings:booking' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_hall">Select Hall</label>
+                    {{ form.hall }}
+                </div>
 
-                    <div class="form-group">
-                        <label for="id_booking_date">Booking Date</label>
-                        <input type="text" class="form-control flatpickr-date" id="id_booking_date" name="{{ form.booking_date.name }}">
-                    </div>
+                <div class="form-group">
+                    <label for="id_booking_date">Booking Date</label>
+                   <input type="date" class="form-control flatpickr-date"
+                          id="id_booking_date"
+                          name="{{ form.booking_date.name }}"
+                          value="{{ form.booking_date.value|default_if_none:'' }}">
+                </div>
 
-                    <div class="form-group">
-                        <label for="id_start_time">Start Time</label>
-                        <input type="text" class="form-control flatpickr-time" id="id_start_time" name="{{ form.start_time.name }}">
-                    </div>
+                <div class="form-group">
+                    <label for="id_start_time">Start Time</label>
+                    <input type="time" class="form-control flatpickr-time"
+                           id="id_start_time"
+                           name="{{ form.start_time.name }}"
+                           value="{{ form.start_time.value|default_if_none:'' }}">
+                </div>
 
-                    <div class="form-group">
-                        <label for="id_end_time">End Time</label>
-                        <input type="text" class="form-control flatpickr-time" id="id_end_time" name="{{ form.end_time.name }}">
-                    </div>
+                <div class="form-group">
+                    <label for="id_end_time">End Time</label>
+                    <input type="time" class="form-control flatpickr-time"
+                           id="id_end_time"
+                           name="{{ form.end_time.name }}"
+                           value="{{ form.end_time.value|default_if_none:'' }}">
+                </div>
 
-                    <button type="submit" class="btn btn-notion" id="submitBtn" disabled>
-                        🔒 Book Now
-                    </button>
-                </form>
-            </div>
+                <button type="submit" class="btn btn-notion" id="submitBtn" disabled>
+                    🔒 Book Now
+                </button>
+            </form>
         </div>
+    </div>
 
-        <div class="col-lg-7">
-            <div class="glass-card p-3">
-                <h5 class="calendar-header">📅 Select Date and Time:</h5>
-                <div id="calendar"></div>
-            </div>
+    <div class="col-lg-7">
+        <div class="glass-card p-3">
+            <h5 class="calendar-header">📅 Select Date and Time:</h5>
+            <div id="calendar"></div>
         </div>
     </div>
 </div>
+```
+
+</div>
 
 <!-- Подключение стилей и скриптов -->
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
