@@ -39,13 +39,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'email'  # ✅ переместить сюда
-    REQUIRED_FIELDS = ['name']  # ✅ переместить сюда
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['name', 'phone']
 
     objects = UserManager()
 
     def __str__(self):
-        return self.name
+        return self.email
 
 
 

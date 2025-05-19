@@ -8,18 +8,20 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="icon" href="{% static 'images/logo_daiyndal.png' %}" type="image/png">
-    {% block head %}{% endblock %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Recursive:wght@400;700&display=swap" rel="stylesheet">
+    {% block head %}{% endblock %}
     {% block styles %}
     <style>
-        .navbar {
-            background-color: transparent;
-            transition: background-color 0.3s ease-in-out;
+        html, body {
+            height: 100%;
         }
-        .navbar.scrolled {
-            background-color: rgba(0, 0, 0, 0.85) !important;
+        body {
+            font-family: 'Recursive', sans-serif;
+        }
+        .navbar {
+            background-color: #000 !important; /* always black */
         }
         .navbar-brand {
             font-weight: bold;
@@ -41,11 +43,12 @@
             color: white;
         }
         .user-avatar {
-            width: 36px;
-            height: 36px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid white;
+        width: 36px;
+        height: 36px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid white;
+        background-color: #ccc;
         }
         @media (max-width: 768px) {
             .navbar-nav {
@@ -55,9 +58,11 @@
                 margin: 0.5rem 0;
             }
             .user-info {
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
+                justify-content: center;
             }
+
             .user-avatar {
                 margin-bottom: 0.5rem;
             }
@@ -65,8 +70,10 @@
     </style>
     {% endblock %}
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="{% url 'core:home' %}">DAIYNDAL</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -81,59 +88,58 @@
                 {% endif %}
                 <li class="nav-item"><a class="nav-link {% if '/about/' in request.path %}active{% endif %}" href="{% url 'core:about' %}">About Us</a></li>
                 <li class="nav-item"><a class="nav-link {% if '/contact/' in request.path %}active{% endif %}" href="{% url 'core:contact' %}">Contact</a></li>
+                {% if user.is_staff %}
+                <li class="nav-item"><a class="nav-link {% if request.path == '/admin/bookings/' %}active{% endif %}" href="{% url 'bookings:all_bookings' %}">All Bookings</a></li>
+                {% endif %}
+
             </ul>
 
-            {% if user.is_authenticated %}
-                <div class="user-info ms-3">
-                    <a href="{% url 'users:profile' %}" class="text-white text-decoration-none d-flex align-items-center gap-2">
-                        {% if user.profile.avatar %}
-                            <img src="{{ user.profile.avatar.url }}" alt="Avatar" class="user-avatar">
-                        {% endif %}
-                        {{ user.username }}
-                    </a>
-                    <form method="POST" action="{% url 'logout' %}" class="d-inline ms-2">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
-                    </form>
-                </div>
-            {% else %}
-                <div class="ms-3">
-                    <a href="{% url 'users:login' %}" class="btn btn-outline-light btn-sm me-2">Login</a>
-                    <a href="{% url 'users:register' %}" class="btn btn-light btn-sm">Register</a>
-                </div>
-            {% endif %}
+            {% with current_url_name=request.resolver_match.url_name|default:'' %}
+    {% if current_url_name != 'about' and current_url_name != 'contact' %}
+        {% if user.is_authenticated %}
+            <div class="user-info ms-3">
+                <a href="{% url 'users:profile' %}" class="text-white text-decoration-none d-flex align-items-center gap-2">
+                    <img src="{% if user.profile.avatar and user.profile.avatar.url %}
+                                {{ user.profile.avatar.url }}
+                              {% else %}
+                                {% static 'images/default-avatar.png' %}
+                              {% endif %}"
+                         alt="Avatar"
+                         class="user-avatar">
+                    {{ user.name|default:user.email }}
+                </a>
+
+                <form method="POST" action="{% url 'logout' %}" class="d-inline ms-2">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="ms-3">
+                <a href="{% url 'users:login' %}" class="btn btn-outline-light btn-sm me-2">Login</a>
+                <a href="{% url 'users:register' %}" class="btn btn-light btn-sm">Register</a>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endwith %}
+
+
         </div>
     </div>
 </nav>
 
-<div class="content-wrapper">
+<!-- Content -->
+<main class="flex-grow-1 pt-5 mt-4 content-wrapper">
     {% block content %}
     {% endblock %}
-</div>
+</main>
 
-<footer class="bg-dark text-white text-center py-3 mt-5">
+<!-- Footer -->
+<footer class="bg-dark text-white text-center py-3 mt-auto">
     <p class="mb-0">&copy; {{ now|date:"Y" }} Gym Booking. All rights reserved.</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-{% block scripts %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const navbar = document.querySelector('.navbar');
-        const contentWrapper = document.querySelector('.content-wrapper');
-
-        function updateNavbarBackground() {
-            if (window.scrollY > contentWrapper.offsetTop) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        }
-
-        window.addEventListener('scroll', updateNavbarBackground);
-        updateNavbarBackground();
-    });
-</script>
-{% endblock %}
+{% block scripts %}{% endblock %}
 </body>
 </html>

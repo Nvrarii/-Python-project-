@@ -7,6 +7,13 @@ from django.http import JsonResponse
 from django.utils.dateparse import parse_datetime
 from datetime import datetime
 from django.contrib.auth import get_user_model
+from django.contrib.admin.views.decorators import staff_member_required
+
+
+@staff_member_required  # только для админов (staff)
+def all_bookings_view(request):
+    bookings = Booking.objects.all().order_by('booking_date', 'start_time')
+    return render(request, 'bookings/all_bookings.html', {'bookings': bookings})
 
 @login_required
 def cancel_booking_view(request, booking_id):
@@ -17,7 +24,7 @@ def cancel_booking_view(request, booking_id):
 
 @login_required
 def my_bookings_view(request):
-    bookings = Booking.objects.filter(user=request.user).order_by('-booking_date', '-start_time')
+    bookings = Booking.objects.filter(user=request.user).select_related('hall__gym')
     return render(request, 'bookings/my_bookings.html', {'bookings': bookings})
 
 # View to handle booking
@@ -29,7 +36,7 @@ def booking_view(request):
             booking = form.save(commit=False)
             booking.user = request.user  # теперь это твой кастомный User
             booking.save()
-            messages.success(request, "Бронирование успешно!")
+            messages.success(request, "Booking successful!")
             return redirect('bookings:booking_confirmation', booking_id=booking.id)
     else:
         form = BookingForm()
@@ -69,3 +76,4 @@ def api_booked_slots(request):
             "title": f"Booking by {b.user.username}",
         })
     return JsonResponse(events, safe=False)
+

@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+
+{% block title %}All Bookings{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <h1 class="mb-4 text-center">All Bookings</h1>
+
+  {% if bookings %}
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-striped table-hover align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">User</th>
+          <th scope="col">Booking Date</th>
+          <th scope="col">Start Time</th>
+          <th scope="col">End Time</th>
+          <th scope="col">Hall</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for booking in bookings %}
+        <tr>
+          <td>{{ booking.user.username }}</td>
+          <td>{{ booking.booking_date|date:"F j, Y" }}</td>
+          <td>{{ booking.start_time|time:"H:i" }}</td>
+          <td>{{ booking.end_time|time:"H:i" }}</td>
+          <td>{{ booking.hall.name }}</td>
+          <td>
+            {% if booking.status == 'confirmed' %}
+              <span class="badge bg-success">Confirmed</span>
+            {% elif booking.status == 'pending' %}
+              <span class="badge bg-warning text-dark">Pending</span>
+            {% else %}
+              <span class="badge bg-secondary">{{ booking.status }}</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="text-center fs-5 mt-5">No bookings found.</p>
+  {% endif %}
+</div>
+{% endblock %}

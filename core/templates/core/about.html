@@ -1,10 +1,13 @@
 {% extends 'core/base.html' %}
 {% load static %}
 
+{% block user_avatar %}{% endblock %}
+
 {% block title %}About Us - Gym Booking{% endblock %}
 
 {% block content %}
 <div class="about-us-container bmw-style">
+
     <header class="hero-section">
         <div class="hero-content">
             <h1 class="hero-title">Your Path to the Perfect Workout Starts Here</h1>
@@ -23,22 +26,22 @@
         <h2 class="section-title">Why Choose Gym Booking?</h2>
         <div class="benefits-grid">
             <div class="benefit-item">
-                <img src="{% static 'icons/Gemini_Generated_Image_c77j77c77j77c77j.jfif' %}" alt="Flexible Schedules">
+                <img src="{% static 'icons/flexible_schedules.png' %}" alt="Flexible Schedules">
                 <h3>Flexible Schedules</h3>
                 <p>Book your workouts at a time that suits you, 24/7.</p>
             </div>
             <div class="benefit-item">
-                <img src="{% static 'icons/Gemini_Generated_Image_mn7az2mn7az2mn7a.jfif' %}" alt="Wide Selection of Gyms">
+                <img src="{% static 'icons/wide_selection.png' %}" alt="Wide Selection of Gyms">
                 <h3>Wide Selection of Gyms</h3>
                 <p>Thousands of gyms and studios across the city.</p>
             </div>
             <div class="benefit-item">
-                <img src="{% static 'icons/Gemini_Generated_Image_c77j77c77j77c77j.jfif' %}" alt="Easy Booking">
+                <img src="{% static 'icons/easy_booking.png' %}" alt="Easy Booking">
                 <h3>Easy Booking</h3>
                 <p>A simple and intuitive process in just a few clicks.</p>
             </div>
             <div class="benefit-item">
-                <img src="{% static 'icons/Gemini_Generated_Image_c77j77c77j77c77j.jfif' %}" alt="Qualified Trainers">
+                <img src="{% static 'icons/qualified_trainers.png' %}" alt="Qualified Trainers">
                 <h3>Qualified Trainers</h3>
                 <p>Train with the best professionals.</p>
             </div>
@@ -46,10 +49,6 @@
     </section>
 
     <section class="our-story-detailed section-with-border">
-        <div class="story-image">
-            <!-- Путь к изображению истории -->
-            <img src="{% static 'images/our-story.jpg' %}" alt="Our Story">
-        </div>
         <div class="story-content">
             <h2 class="section-title">Our Story</h2>
             <p>We are a team of fitness enthusiasts who once faced the problem of finding and booking a suitable gym. Spending time calling around and figuring out schedules seemed inefficient. That's how the idea for Gym Booking was born - a platform that brings together all the sports opportunities in the city in one convenient place.</p>
@@ -63,10 +62,6 @@
             <p>Gym Booking's mission is to inspire people to lead an active lifestyle by providing easy access to the best sports resources. We strive to create a community where everyone can find the ideal place and time for their workouts, achieve their fitness goals, and feel better.</p>
             <p>We are constantly developing our platform, adding new features and improving the user experience to make your journey to health as comfortable and effective as possible.</p>
         </div>
-        <div class="mission-image">
-            <!-- Путь к изображению миссии -->
-            <img src="{% static 'images/our-mission.jpg' %}" alt="Our Mission">
-        </div>
     </section>
 
     <section class="call-to-action section-with-border">
@@ -75,11 +70,13 @@
         <a href="{% url 'users:register' %}" class="cta-button">Register</a>
         <a href="{% url 'bookings:booking' %}" class="cta-button secondary">Find a Gym</a>
     </section>
+
 </div>
 {% endblock %}
 
 {% block styles %}
 <style>
+
     /* General Styles */
     .bmw-style {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -101,7 +98,7 @@
         margin-bottom: 60px;
     }
 
-    /* Remove border from the last section */
+    /* Remove border from last section */
     .call-to-action.section-with-border {
         border-bottom: none;
         margin-bottom: 0;
@@ -121,48 +118,19 @@
         background-repeat: no-repeat;
     }
 
-    .hero-image {
-        max-width: 400px;
-        height: auto;
-        border-radius: 10px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        background-color: transparent;
-    }
-
-    .hero-image img {
-        width: 100%;
-        height: auto;
-        display: block;
-    }
-
-    .hero-image::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border-radius: 10px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        z-index: -1;
-    }
-
-    .hero-content {
-        max-width: 500px;
-        text-align: center;
-    }
-
     .hero-title {
         font-size: 3rem;
         font-weight: bold;
-        color: #222;
+        color: #ffffff; /* ✅ Белый */
         margin-bottom: 20px;
+        text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6); /* Для читаемости */
     }
 
     .hero-subtitle {
         font-size: 1.2rem;
-        color: #555;
+        color: #ffffff; /* ✅ Белый */
         margin-bottom: 30px;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
     }
 
     .hero-button {
@@ -178,6 +146,20 @@
 
     .hero-button:hover {
         background-color: #0056b3;
+    }
+
+    .hero-image {
+        max-width: 400px;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        position: relative;
+    }
+
+    .hero-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 10px;
     }
 
     /* Benefits Section */
@@ -201,9 +183,8 @@
         width: 100px;
         height: 100px;
         margin-bottom: 20px;
-        color: #007bff;
         border-radius: 15px;
-        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 5px 10px rgba(0,0,0,0.05);
     }
 
     .benefit-item h3 {
@@ -238,7 +219,7 @@
     .story-image img, .mission-image img {
         width: 100%;
         border-radius: 10px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
     }
 
     .story-content, .mission-content {
@@ -301,7 +282,7 @@
     }
 
     .cta-button.secondary:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255,255,255,0.1);
     }
 
     /* Responsive Styles */

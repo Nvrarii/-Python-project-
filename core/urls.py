@@ -1,11 +1,12 @@
 from django.urls import path
 from . import views
+from bookings.views import all_bookings_view
 
 app_name = 'core'
 
 urlpatterns = [
-    path('', views.home, name='home'),           # Главная страница
-    path('about/', views.about, name='about'),    # Страница "О нас"
-    path('contact/', views.contact, name='contact'),  # Страница "Контакты"
+    path('', views.home, name='home'),
+    path('about/', views.about, name='about'),
+    path('contact/', views.contact, name='contact'),
 
 ]
